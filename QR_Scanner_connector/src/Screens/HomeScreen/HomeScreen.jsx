@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
+import UserData from '../../Components/Home/UserData';
+import { useRoute } from '@react-navigation/native';
 
 const HomeScreen = () => {
   return (
     <View style={homeStyle.cont}>
-      <Text>Home</Text>
+      <UserData/>
     </View>
   )
 }

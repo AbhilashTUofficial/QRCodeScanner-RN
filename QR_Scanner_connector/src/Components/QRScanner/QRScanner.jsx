@@ -3,14 +3,20 @@ import React from 'react'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 import { RNCamera } from 'react-native-camera';
 import { ConnectorCall } from '../../Utils/http';
+import { useNavigation } from '@react-navigation/native';
+import putToLocal from '../../Utils/putToLocal';
 
 const QRScanner = () => {
+  const navigation=useNavigation();
 
     onSuccess = e => {
         // Linking.openURL(e.data).catch(err =>
         //   console.error('An error occured', err)
         // );
-        ConnectorCall(url=e.data)
+        const response=ConnectorCall(url=e.data);
+        putToLocal(response);
+        navigation.navigate("home")
+
       };
 
   return (
@@ -21,18 +27,6 @@ const QRScanner = () => {
         flashMode={RNCamera.Constants.FlashMode.off}
         containerStyle={{width:300,height:300}}
         cameraStyle={[{height:300,width:300}]}
-        topContent={
-          <Text >
-            Go to{' '}
-            <Text >wikipedia.org/wiki/QR_code</Text> on
-            your computer and scan the QR code.
-          </Text>
-        }
-        bottomContent={
-          <TouchableOpacity >
-            <Text>OK. Got it!</Text>
-          </TouchableOpacity>
-        }
       />
     </View>
   )
