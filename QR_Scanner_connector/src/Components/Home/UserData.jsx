@@ -1,21 +1,37 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import TextTile from './TextTile'
 import getFromLocal from '../../Utils/getFromLocal'
 
-const UserData = () => {
+const UserData = ({data}) => {
 
-    data=getFromLocal()
-  return (
-    <View style={userDataSyles.cont}>
-        <TextTile a={"Name"} b={"name"}/>
-        <TextTile a={"Email"} b={"email"}/>
-        <TextTile a={"Name"} b={"phone"}/>
-        <TextTile a={"TimeZone"} b={"timezone"}/>
+  // var data={}
+  // useEffect(()=>{
+  //   data=loadData();
+  //   console.log(data)
+  // })
 
-    </View>
-  )
-}
+
+  // loadData=async()=>{
+  //   return await getFromLocal().then(res=>{return res}) 
+    
+  // }
+  console.log(data)
+    return (
+      <View style={userDataSyles.cont}>
+        <Text>{}</Text>
+          <TextTile a={"Name"} b={data["name"]}/>
+          <TextTile a={"UID"} b={data["uid"]}/>
+          <TextTile a={"Email"} b={data["email"]}/>
+          <TextTile a={"Name"} b={"123"}/>
+          <TextTile a={"TimeZone"} b={data["timezone"]}/>
+  
+      </View>
+    )
+
+  }
+
+
 
 export default UserData
 

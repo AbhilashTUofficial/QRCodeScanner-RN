@@ -4,9 +4,11 @@ import UserData from '../../Components/Home/UserData';
 import { useRoute } from '@react-navigation/native';
 
 const HomeScreen = () => {
+  const route=useRoute();
+  const data=route.params
   return (
     <View style={homeStyle.cont}>
-      <UserData/>
+      <UserData data={data}/>
     </View>
   )
 }
