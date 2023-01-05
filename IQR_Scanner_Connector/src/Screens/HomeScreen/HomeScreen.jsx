@@ -1,14 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import UserData from '../../Components/Home/UserData';
-import { useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = () => {
-  // const route=useRoute();
-  // const data=route.params
+  const data=useSelector((state)=>state.user)
   return (
     <View style={homeStyle.cont}>
-      {/* <UserData data={data}/> */}
+      <UserData data={data}/>
     </View>
   )
 }
