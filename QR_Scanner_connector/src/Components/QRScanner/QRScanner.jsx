@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 import { RNCamera } from 'react-native-camera';
@@ -9,34 +9,32 @@ import getFromLocal from '../../Utils/getFromLocal';
 
 const QRScanner = () => {
   const navigation=useNavigation();
-  const localData=getFromLocal();
+  // const localData=getFromLocal();
+  const localData={}
 
     onSuccess =async e => {
-        // Linking.openURL(e.data).catch(err =>
-        //   console.error('An error occured', err)
-        // );
         const response= await ConnectorCall(url=e.data);
         putToLocal(response);
-        navigation.navigate("home",response)
+        navigation.navigate("home")
       };
+      
+      return (
 
-      if (localData==={}){
-
-        return (
-          <View style={qrStyles.cont}>
-               <QRCodeScanner
-               style={qrStyles.scanner}
-              onRead={this.onSuccess}
-              flashMode={RNCamera.Constants.FlashMode.off}
-              containerStyle={{width:300,height:300}}
-              cameraStyle={[{height:300,width:300}]}
-            />
-          </View>
+        <View style={qrStyles.cont}>
+            <QRCodeScanner
+             style={qrStyles.scanner}
+            onRead={this.onSuccess}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            containerStyle={{width:300,height:300}}
+            cameraStyle={[{height:300,width:300}]}
+          />
+        </View>
         )
-      }else{
-        navigation.navigate("home",localData)
-
-      }
+  
+      
+        
+  
+         
 }
 
 export default QRScanner
@@ -48,7 +46,7 @@ const qrStyles=StyleSheet.create({
         elevation:2,
         borderRadius:12,
         backgroundColor:"white",
-        overflow:"hidden"
+        // overflow:"hidden"
     },
     scanner:{
      
