@@ -1,26 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit';
-import getFromLocal from '../../Utils/getFromLocal';
 import putToLocal from '../../Utils/putToLocal';
+import  userAuthSet  from '../../Utils/userAuthSet';
 
 const userCredSlice = createSlice({
     name: 'userReducer',
-    initialState: [],
+    initialState: {
+        // status:"loggedin",
+        // status:"notloggedin",
+        // status:"null",
+        data:{}
+    },
 
     reducers: {
+
+        // Save user data
         saveUser:(state,action)=>{
-            state=action.payload;
             putToLocal(action.payload)
+            state.data=action.payload;
         },
-        getUser:(state)=>{
-            console.log("called")
-            state.push(getFromLocal())
+        
+        // Get user data
+        getUser:(state,action)=>{
+            state.data=action.payload
+        },
+        
+        // Change user status
+        changeUserStatus:(state, action)=>{
+            state.status=action.payload;
+            userAuthSet(action.payload)
         }
     },
 });
 
 export const {
     saveUser,
-    getUser
+    getUser,
+    changeUserStatus
 } = userCredSlice.actions;
 
 export default userCredSlice.reducer;

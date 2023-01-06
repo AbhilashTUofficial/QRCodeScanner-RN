@@ -11,13 +11,12 @@ const TextTile = ({a,b}) => {
 
 export default TextTile
 
-
 const textTileStyle=StyleSheet.create({
     cont:{
         marginVertical:8,
         marginHorizontal:6,
         borderRadius:6,
-        // elevation:2,
+        elevation:2,
         backgroundColor:"white",
         height:36,
         justifyContent:"center",

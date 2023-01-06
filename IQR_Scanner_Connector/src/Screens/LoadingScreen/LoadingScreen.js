@@ -1,35 +1,58 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import getFromLocal from '../../Utils/getFromLocal'
 import { useNavigation } from '@react-navigation/native'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from '../../Redux/User/userCredSlice'
+import { useDispatch } from 'react-redux'
+import { changeUserStatus, getUser } from '../../Redux/User/userCredSlice'
+import { userAuthCheck } from '../../Utils/userAuthCheck'
 
 const LoadingScreen = () => {
   const navigation=useNavigation();
   const dispatch=useDispatch();
+  const [userStatus, setUserStatus]=useState(null)
+  
+  // Load User Data from local storage.
+  loadData=async()=>{
+    const localUserData=await getFromLocal()
+    dispatch(getUser(localUserData))
+  }
 
-  const data=useSelector((state)=>state.user)
+  // Load User Status from local storage.
+  loadUser=async()=>{
+    setUserStatus(await userAuthCheck())
+    if(userStatus!=null){
+      dispatch(changeUserStatus(userStatus))
+    }
+  }
+
+  // Check User Status.
+  checkUser=()=>{
+    if(userStatus==="notloggedin" || 
+    userStatus === undefined){
+      return(navigation.replace("qrscannerscreen")) 
+    }
+    else if(userStatus==="loggedin"){
+      loadData()
+      return(navigation.replace("home")) 
+    } 
+  }
+
   useEffect(()=>{
 
-    // console.log(getFromLocal())
-    console.log(data)
+  loadUser();
 
-    if(data===null || data==="null"){
-      return (
-        <View style={loadingScreenStyles.cont}>
-          <Text>Loading...</Text>
-        </View>
-      )
-    }else if(data===[]){
-      return(navigation.navigate("qrscannerscreen")) 
-    }
-    else if(data!==[]){
-      return(navigation.navigate("home")) 
-    } 
-  })
+  checkUser();
 
+  },[userStatus])
+
+  // Loading state
+  return (
+    <View style={loadingScreenStyles.cont}>
+      <Text>Loading...</Text>
+    </View>
+  )
 }
+
 export default LoadingScreen
 
 const loadingScreenStyles=StyleSheet.create({

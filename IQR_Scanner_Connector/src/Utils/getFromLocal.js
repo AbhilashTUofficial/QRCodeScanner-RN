@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default GetFromLocal = async () => {
+export default getFromLocal = async () => {
     try {
-        return await AsyncStorage.getItem('user_data')
-        .then((res)=>{
-            console.log("from root: "+res)
-            return JSON.parse(res)}) ;
+        const jsonValue = await AsyncStorage.getItem('@user_data')
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+        
     } catch (error) {
-        return [];
+        console.log("Error Occured \n"+error)
+        return {}
     }
 };

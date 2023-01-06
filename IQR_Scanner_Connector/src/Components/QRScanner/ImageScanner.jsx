@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
+import { View, StyleSheet, Dimensions, Image } from 'react-native'
 import React from 'react'
+
 const size=Dimensions.get('window').width*0.8;
 
-const ImageScanner = ({imgUri}) => {
+const ImageScanner = ({imgUri,imgStyle}) => {
   return (
     <View style={imageScannerStyles.cont}>
         <Image 
-        style={imageScannerStyles.imgCont}
+        style={[imageScannerStyles.imgCont,imgStyle]}
          source={{uri:imgUri[0]}}/>
     </View>
   )
@@ -23,10 +24,11 @@ const imageScannerStyles=StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         overflow:"hidden",
+
     },
     imgCont:{
         width:"100%",
         height:"100%",
+    },
 
-    }
 })

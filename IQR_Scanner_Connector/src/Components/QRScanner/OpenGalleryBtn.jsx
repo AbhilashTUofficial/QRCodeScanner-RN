@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 
 const OpenGalleryBtn = ({onPress}) => {
@@ -21,11 +21,11 @@ const openGalleryBtnStyles=StyleSheet.create({
         alignItems:"center",
         backgroundColor:"#06d79c",
         padding:16,
-        borderRadius:8,
-        shadowColor: '#171717',
-        shadowOffset: {width: 1, height: 2},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+        borderRadius:22,
+        shadowColor: "rgb(146,229,202)",
+        shadowOffset: {width: 2, height: 6},
+        shadowOpacity: 1,
+        shadowRadius: 26,
     },
     txt:{
         color:"white",
