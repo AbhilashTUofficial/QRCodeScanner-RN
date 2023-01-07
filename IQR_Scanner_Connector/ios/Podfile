@@ -3,6 +3,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
+permissions_path = '../node_modules/react-native-permissions/ios'
+pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 
 target 'IQR_Scanner_Connector' do
   config = use_native_modules!

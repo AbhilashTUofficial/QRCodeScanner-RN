@@ -9,7 +9,7 @@ import { userAuthCheck } from '../../Utils/userAuthCheck'
 const LoadingScreen = () => {
   const navigation=useNavigation();
   const dispatch=useDispatch();
-  const [userStatus, setUserStatus]=useState(null)
+  const [userStatus, setUserStatus]=useState()
   
   // Load User Data from local storage.
   loadData=async()=>{
@@ -28,7 +28,7 @@ const LoadingScreen = () => {
   // Check User Status.
   checkUser=()=>{
     if(userStatus==="notloggedin" || 
-    userStatus === undefined){
+    userStatus === undefined || userStatus===null){
       return(navigation.replace("qrscannerscreen")) 
     }
     else if(userStatus==="loggedin"){

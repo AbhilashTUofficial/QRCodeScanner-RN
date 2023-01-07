@@ -24,6 +24,9 @@ const userDataSyles=StyleSheet.create({
         height:300,
         backgroundColor:"white",
         borderRadius:12,
+        // android shadow
+        elevation:2,
+        // ios shadow
         shadowColor: '#171717',
         shadowOffset: {width: 2, height: 4},
         shadowOpacity: 0.2,

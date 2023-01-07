@@ -1,39 +1,61 @@
-import { View, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import OpenGalleryBtn from '../../Components/QRScanner/OpenGalleryBtn'
-import { launchImageLibrary } from 'react-native-image-picker';
-import ImageScanner from '../../Components/QRScanner/ImageScanner';
-import ScanBtn from '../../Components/QRScanner/ScanBtn';
+import { View, StyleSheet, Platform } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import CustomBtn from '../../Components/QRScanner/CustomBtn'
 import RNQRGenerator from 'rn-qr-generator';
+import { launchImageLibrary } from 'react-native-image-picker';
 import { ConnectorCall } from '../../Utils/http';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { changeUserStatus, saveUser } from '../../Redux/User/userCredSlice';
+import ImageScanner from '../../Components/QRScanner/ImageScanner';
+import CameraScanner from '../../Components/QRScanner/CameraScanner';
 
 
 const QRScannerScreen = () => {
 
   const navigation=useNavigation()
   const dispatch=useDispatch();
-  const [selectImage, imageSelected] =useState(false);
   const [imgUri,setImgUri]=useState([])
   const [canRead,setCanRead]=useState(true)
+  const [cameraOn,setCameraOn]=useState(false)
 
-  // Upload Image from gallery.
-  const uploadImageHanlder = () => {
+  // icons
+  const galleryIcon=require("../../Assets/Img/Icons/gallery_icon.png");
+  const cameraIcon=require("../../Assets/Img/Icons/camera_icon.png");
+  const scanIcon=require("../../Assets/Img/Icons/scan_icon.png");
+  const notFoundIcon=require("../../Assets/Img/Icons/notfound_icon.png")
 
-    const options = {
-        noData: true,
-    };
+const openCamera=()=>{
+  setCameraOn(true)
+  setCanRead(true)
 
-    // Open Gallery and add image to image-stack
-    launchImageLibrary(options, response => {
-        if (!response.didCancel) {
-            setImgUri(uri => [...uri, response.assets[0].uri]);
-          imageSelected(true)
-        }
-    });
+  if(Platform.OS==="ios"){
+    alert("Not Tested on a real device")
+  }
+  console.log("open camera")
+  setImgUri([])
+  const options = {
+    noData: true,
 };
+  launchImageLibrary(options, response => {
+
+});
+}
+
+const openGallery=()=>{
+  setImgUri([])
+  setCanRead(true)
+  const options = {
+    noData: true,
+};
+
+// Open Gallery and add image to image-stack
+launchImageLibrary(options, response => {
+    if (!response.didCancel) {
+        setImgUri(uri => [...uri, response.assets[0].uri]);
+    }
+});
+}
 
 // Scan selected image.
 const scanQrCode=()=>{
@@ -48,7 +70,6 @@ const scanQrCode=()=>{
         }
     })
   }else{
-    uploadImageHanlder();
     // Reset states
     setCanRead(true)
     setImgUri([]);
@@ -62,7 +83,6 @@ const callLink=async(url)=>{
       dispatch(saveUser(response))
       dispatch(changeUserStatus("loggedin"))
       navigation.navigate("home")
-      imageSelected(false)
     setImgUri([]);
 
     }) 
@@ -71,16 +91,48 @@ const callLink=async(url)=>{
     setCanRead(false)
   }
 }
+
+useEffect(()=>{
+  renderScanner();
+},[cameraOn])
+
+const renderScanner=()=>{
+  if(cameraOn){
+   return <CameraScanner/>
+  }else{
+   return <ImageScanner imgUri={imgUri} imgStyle={!canRead&&{opacity:0.5}}/>
+  }
+ 
+}
+  console.log(cameraOn)
+
   return (
     <View style={qrStyles.cont}>
       {
-      !selectImage?<OpenGalleryBtn 
-      onPress={uploadImageHanlder
-    }/> :
+      !imgUri.length!=0?
+        <View style={qrStyles.btns}>
+        <CustomBtn 
+            icon={cameraIcon}
+            onPress={openCamera}/> 
+        <CustomBtn 
+            icon={galleryIcon}
+            onPress={openGallery}/> 
+        </View>:
       <>
-      <ImageScanner imgUri={imgUri} imgStyle={!canRead&&{opacity:0.5}}/>
-      <ScanBtn onPress={()=>scanQrCode()} 
-      prompt={canRead?"SCAN":"UPLOAD"}/>
+      {
+        cameraOn&&<CameraScanner/>
+      }
+      {
+        !cameraOn&&<ImageScanner imgUri={imgUri} imgStyle={!canRead&&{opacity:0.5}}/>
+      }
+      <View style={qrStyles.btns}>
+      <CustomBtn onPress={openCamera}
+      icon={cameraIcon}/>
+      <CustomBtn onPress={scanQrCode}
+      icon={canRead?scanIcon:notFoundIcon}/>
+      <CustomBtn onPress={openGallery}
+      icon={galleryIcon}/>
+      </View>
       </>
       }
     </View>
@@ -95,4 +147,8 @@ const qrStyles=StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
     },
+    btns:{
+      flexDirection:"row",
+
+    }
 })

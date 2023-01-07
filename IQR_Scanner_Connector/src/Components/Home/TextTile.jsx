@@ -16,7 +16,6 @@ const textTileStyle=StyleSheet.create({
         marginVertical:8,
         marginHorizontal:6,
         borderRadius:6,
-        elevation:2,
         backgroundColor:"white",
         height:36,
         justifyContent:"center",

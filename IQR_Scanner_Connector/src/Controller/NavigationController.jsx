@@ -6,7 +6,7 @@ import QRScannerScreen from '../Screens/QRScannerScreen/QRScannerScreen';
 import LoadingScreen from '../Screens/LoadingScreen/LoadingScreen';
 import { Provider } from 'react-redux';
 import { store } from '../Redux/store';
-import { Button } from 'react-native';
+import { Button, Pressable, Text } from 'react-native';
 import userAuthSet from '../Utils/userAuthSet';
 import { changeUserStatus } from '../Redux/User/userCredSlice';
 
@@ -37,15 +37,19 @@ const NavigationController = () => {
         options={({navigation})=>({
           title:"HOME",
           headerRight: () => (
-            <Button
+            <Pressable
               onPress={() => {
                 userAuthSet("notloggedin")
                 changeUserStatus("notloggedin")
                 navigation.replace("qrscannerscreen")
-              }}
-              title="Clear"
-              color="#007aff"
-            />
+              }}>
+                <Text
+                style={{
+                  color:"#007aff",
+                  fontSize:14,
+                  fontWeight:"bold"
+                }}>CLEAR</Text>
+            </Pressable>
           )})} />
         
         </Stack.Navigator>
