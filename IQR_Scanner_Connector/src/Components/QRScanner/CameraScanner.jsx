@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 import { RNCamera } from 'react-native-camera';
@@ -6,18 +6,17 @@ import { RNCamera } from 'react-native-camera';
 const size=Dimensions.get('window').width*0.8;
 
 const CameraScanner = ({onSuccess}) => {
-    console.log("called")
   return (
     <View style={cameraScannerStyles.cont}>
-        <View style={cameraScannerStyles.cameraCont}/>
-    {/* <QRCodeScanner
-    style={cameraScannerStyles.cameraCont}
-    onRead={onSuccess}
-    flashMode={RNCamera.Constants.FlashMode.off}
-    containerStyle={{width:300,height:300}}
-    cameraStyle={[{height:300,width:300}]}
-    /> */}
- </View>
+      <QRCodeScanner
+      style={cameraScannerStyles.cameraCont}
+      // onRead={onSuccess}
+      cameraProps={{captureAudio:false}}
+      flashMode={RNCamera.Constants.FlashMode.off}
+      containerStyle={{width:size,height:size}}
+      cameraStyle={[{height:size,width:size}]}
+      /> 
+    </View>
   )
 }
 
@@ -32,11 +31,6 @@ const cameraScannerStyles=StyleSheet.create({
         borderRadius:12,
         alignItems:"center",
         justifyContent:"center",
+        overflow:"hidden"
     },
-    cameraCont:{
-        width:200,
-        height:200,
-    
-    },
-
 })

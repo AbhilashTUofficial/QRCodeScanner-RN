@@ -24,17 +24,13 @@ const QRScanner = () => {
             <QRCodeScanner
              style={qrStyles.scanner}
             onRead={this.onSuccess}
+            cameraProps={{captureAudio:false}}
             flashMode={RNCamera.Constants.FlashMode.off}
             containerStyle={{width:300,height:300}}
             cameraStyle={[{height:300,width:300}]}
           />
         </View>
         )
-  
-      
-        
-  
-         
 }
 
 export default QRScanner
@@ -49,6 +45,7 @@ const qrStyles=StyleSheet.create({
         // overflow:"hidden"
     },
     scanner:{
-     
+     width:"100%",
+     height:"100%"
     }
 })

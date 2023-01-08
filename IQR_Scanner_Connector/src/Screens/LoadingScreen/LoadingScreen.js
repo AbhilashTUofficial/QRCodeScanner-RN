@@ -11,6 +11,7 @@ const LoadingScreen = () => {
   const dispatch=useDispatch();
   const [userStatus, setUserStatus]=useState()
   
+  console.log(userStatus)
   // Load User Data from local storage.
   loadData=async()=>{
     const localUserData=await getFromLocal()
@@ -27,8 +28,7 @@ const LoadingScreen = () => {
 
   // Check User Status.
   checkUser=()=>{
-    if(userStatus==="notloggedin" || 
-    userStatus === undefined || userStatus===null){
+    if(userStatus==="notloggedin" || userStatus===null){
       return(navigation.replace("qrscannerscreen")) 
     }
     else if(userStatus==="loggedin"){

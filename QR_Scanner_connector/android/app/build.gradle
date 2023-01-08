@@ -135,6 +135,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
+        missingDimensionStrategy 'react-native-camera', 'general'
         applicationId "com.qr_scanner_connector"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
