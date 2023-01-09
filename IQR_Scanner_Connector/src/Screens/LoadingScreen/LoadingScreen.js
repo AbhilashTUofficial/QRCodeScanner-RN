@@ -11,7 +11,6 @@ const LoadingScreen = () => {
   const dispatch=useDispatch();
   const [userStatus, setUserStatus]=useState()
   
-  console.log(userStatus)
   // Load User Data from local storage.
   loadData=async()=>{
     const localUserData=await getFromLocal()

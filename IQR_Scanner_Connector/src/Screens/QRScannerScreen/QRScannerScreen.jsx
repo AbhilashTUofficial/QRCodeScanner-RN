@@ -1,4 +1,4 @@
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform, Linking } from 'react-native'
 import React, {useState } from 'react'
 import CustomBtn from '../../Components/QRScanner/CustomBtn'
 import RNQRGenerator from 'rn-qr-generator';
@@ -33,7 +33,6 @@ const QRScannerScreen = () => {
       alert("Not Tested on a real device")
     }
     setImgUri([])
-
   }
 
   const openGallery=()=>{
@@ -55,15 +54,19 @@ const QRScannerScreen = () => {
   // Scan selected image.
   const scanQrCode=()=>{
     if(canRead){
-      RNQRGenerator.detect({
-        uri: imgUri[0], 
-      })
-        .then(response => {
-          const { values } = response; 
-          if(values!==[]){
-            callLink(values[0]);
-          }
-      })
+      if(imgUri.length===0){
+        alert("Select A Image or Open your Camera first")
+      }else{
+        RNQRGenerator.detect({
+          uri: imgUri[0], 
+        })
+          .then(response => {
+            const { values } = response; 
+            if(values!==[]){
+              callLink(values[0]);
+            }
+        })
+      }
     }else{
       // Reset states
       setCanRead(true)
@@ -72,24 +75,32 @@ const QRScannerScreen = () => {
   }
   // Call the link from QR Code.
   const callLink=async(url)=>{
-    console.log("called")
     try {
       await ConnectorCall(url).then((response)=>{
         values=[]
-        dispatch(saveUser(response))
-        dispatch(changeUserStatus("loggedin"))
-        navigation.navigate("home")
-        setImgUri([]);
+        if(response==="network_error"){
+          alert('Check your network!\nOr the Image you selected');
+
+        }else{
+          dispatch(saveUser(response))
+          dispatch(changeUserStatus("loggedin"))
+          navigation.navigate("home")
+          setImgUri([]);
+        }
       }) 
-    } catch (error) {
+    } catch (error) {      
       alert('This Image Cant be Scanned,\nUpload another one');
       setCanRead(false)
     }
   }
+  const onSuccess=(e)=>{
+    callLink(e.data)
+  }
 
   const renderScanner=()=>{
     if(cameraOn){
-    return <CameraScanner/>
+    return <CameraScanner onSuccess={onSuccess.bind()}/>
+    return 
     }else{
     return <ImageScanner imgUri={imgUri} imgStyle={!canRead&&{opacity:0.5}}/>
     }

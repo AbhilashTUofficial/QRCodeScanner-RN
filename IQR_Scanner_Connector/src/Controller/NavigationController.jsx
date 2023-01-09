@@ -6,7 +6,7 @@ import QRScannerScreen from '../Screens/QRScannerScreen/QRScannerScreen';
 import LoadingScreen from '../Screens/LoadingScreen/LoadingScreen';
 import { Provider } from 'react-redux';
 import { store } from '../Redux/store';
-import { Button, Pressable, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import userAuthSet from '../Utils/userAuthSet';
 import { changeUserStatus } from '../Redux/User/userCredSlice';
 

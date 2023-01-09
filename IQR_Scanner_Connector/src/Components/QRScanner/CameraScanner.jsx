@@ -7,10 +7,11 @@ const size=Dimensions.get('window').width*0.8;
 
 const CameraScanner = ({onSuccess}) => {
   return (
+    
     <View style={cameraScannerStyles.cont}>
       <QRCodeScanner
       style={cameraScannerStyles.cameraCont}
-      // onRead={onSuccess}
+      onRead={onSuccess}
       cameraProps={{captureAudio:false}}
       flashMode={RNCamera.Constants.FlashMode.off}
       containerStyle={{width:size,height:size}}
