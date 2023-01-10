@@ -7,7 +7,7 @@ export const ConnectorCall = async (url) => {
     }else{
       response= response.data;
     }
-    return validateResponse(response);
+    return response;
 
   } catch (error) {
     return "network_error"
