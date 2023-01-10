@@ -23,7 +23,6 @@ const CameraScanner = ({onSuccess}) => {
 
 export default CameraScanner;
 
-
 const cameraScannerStyles=StyleSheet.create({
     cont:{
         width:size,

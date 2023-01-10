@@ -1,4 +1,4 @@
-import { View, StyleSheet, Platform, Linking } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import React, {useState } from 'react'
 import CustomBtn from '../../Components/QRScanner/CustomBtn'
 import RNQRGenerator from 'rn-qr-generator';
@@ -9,10 +9,11 @@ import { useDispatch } from 'react-redux';
 import { changeUserStatus, saveUser } from '../../Redux/User/userCredSlice';
 import ImageScanner from '../../Components/QRScanner/ImageScanner';
 import CameraScanner from '../../Components/QRScanner/CameraScanner';
-
+import isValidUrl from '../../Utils/isValidUrl';
 
 const QRScannerScreen = () => {
 
+  // hooks and states
   const navigation=useNavigation()
   const dispatch=useDispatch();
   const [imgUri,setImgUri]=useState([])
@@ -75,32 +76,35 @@ const QRScannerScreen = () => {
   }
   // Call the link from QR Code.
   const callLink=async(url)=>{
-    try {
-      await ConnectorCall(url).then((response)=>{
-        values=[]
-        if(response==="network_error"){
-          alert('Check your network!\nOr the Image you selected');
 
-        }else{
-          dispatch(saveUser(response))
-          dispatch(changeUserStatus("loggedin"))
-          navigation.navigate("home")
-          setImgUri([]);
-        }
-      }) 
-    } catch (error) {      
-      alert('This Image Cant be Scanned,\nUpload another one');
+    if(isValidUrl(url)){
+      try {
+        await ConnectorCall(url).then((response)=>{
+          values=[]
+          if(response==="network_error"){
+            alert('Check your network!');
+          }else if(response==="not_valid"){
+            alert("Invalid QR Code")
+          }else{
+            dispatch(saveUser(response))
+            dispatch(changeUserStatus("loggedin"))
+            navigation.navigate("home")
+            setImgUri([]);
+          }}) 
+      } catch (error) {      
+        alert('This Image Cant be Scanned,\nUpload another one');
+        setCanRead(false)
+      }
+    }else{
+      alert("This Image can't be scanned.\nPlease check your Image.")
       setCanRead(false)
     }
   }
-  const onSuccess=(e)=>{
-    callLink(e.data)
-  }
+
 
   const renderScanner=()=>{
     if(cameraOn){
-    return <CameraScanner onSuccess={onSuccess.bind()}/>
-    return 
+    return <CameraScanner onSuccess={((e)=>{callLink(e.data)}).bind()}/>
     }else{
     return <ImageScanner imgUri={imgUri} imgStyle={!canRead&&{opacity:0.5}}/>
     }
@@ -121,6 +125,7 @@ const QRScannerScreen = () => {
       </View>
     </View>
   )
+
 }
 
 export default QRScannerScreen
@@ -133,6 +138,5 @@ const qrStyles=StyleSheet.create({
     },
     btns:{
       flexDirection:"row",
-
     }
 })
