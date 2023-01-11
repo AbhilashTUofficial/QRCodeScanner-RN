@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { changeUserStatus, saveUser } from '../../Redux/User/userCredSlice';
 import ImageScanner from '../../Components/QRScanner/ImageScanner';
 import CameraScanner from '../../Components/QRScanner/CameraScanner';
-import isValidUrl from '../../Utils/isValidUrl';
+import {isValidUrl} from '../../Utils/validation';
 
 const QRScannerScreen = () => {
 
@@ -74,6 +74,7 @@ const QRScannerScreen = () => {
       setImgUri([]);
     }
   }
+
   // Call the link from QR Code.
   const callLink=async(url)=>{
 

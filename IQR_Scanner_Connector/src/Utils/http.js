@@ -13,18 +13,3 @@ export const ConnectorCall = async (url) => {
     return "network_error"
   }
 };
-
-const validateResponse=(response)=>{
-  try {
-    if(response.name!==undefined && response.uid!==undefined 
-      && response.email!==undefined && response.timezone!==undefined
-      && response.number!==undefined){
-        return response
-      }else{
-    return "not_valid"
-
-      }  
-  } catch (error) {
-    return "not_valid"
-  }
-}

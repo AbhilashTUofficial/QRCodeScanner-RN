@@ -4,7 +4,7 @@ import getFromLocal from '../../Utils/getFromLocal'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { changeUserStatus, getUser } from '../../Redux/User/userCredSlice'
-import { userAuthCheck } from '../../Utils/userAuthCheck'
+import { userAuthCheck } from '../../Utils/userAuth'
 
 const LoadingScreen = () => {
   const navigation=useNavigation();

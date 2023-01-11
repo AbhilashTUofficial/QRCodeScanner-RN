@@ -1,13 +1,12 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Screens/HomeScreen/HomeScreen';
 import QRScannerScreen from '../Screens/QRScannerScreen/QRScannerScreen';
 import LoadingScreen from '../Screens/LoadingScreen/LoadingScreen';
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import { store } from '../Redux/store';
 import { Pressable, Text } from 'react-native';
-import userAuthSet from '../Utils/userAuthSet';
 import { changeUserStatus } from '../Redux/User/userCredSlice';
 
 const NavigationController = () => {
@@ -39,7 +38,6 @@ const NavigationController = () => {
           headerRight: () => (
             <Pressable
               onPress={() => {
-                userAuthSet("notloggedin")
                 changeUserStatus("notloggedin")
                 navigation.replace("qrscannerscreen")
               }}>

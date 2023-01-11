@@ -10,4 +10,3 @@ export default putToLocal = async(data) => {
         console.log("Error Occured! \n"+error)
     }
 };
-
