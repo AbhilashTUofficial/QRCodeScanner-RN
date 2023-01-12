@@ -10,6 +10,7 @@ import { changeUserStatus, saveUser } from '../../Redux/User/userCredSlice';
 import ImageScanner from '../../Components/QRScanner/ImageScanner';
 import CameraScanner from '../../Components/QRScanner/CameraScanner';
 import {isValidUrl} from '../../Utils/validation';
+import { openGallery } from '../../Utils/openGallery';
 
 const QRScannerScreen = () => {
 
@@ -19,6 +20,10 @@ const QRScannerScreen = () => {
   const [imgUri,setImgUri]=useState([])
   const [canRead,setCanRead]=useState(true)
   const [cameraOn,setCameraOn]=useState(false)
+
+  // change states
+  // const updateCameraOn=(e)=>setCameraOn(e);
+  // const updateCanRead=(e)=>setCanRead(e);
 
   // icons
   const galleryIcon=require("../../Assets/Img/Icons/gallery_icon.png");
@@ -36,21 +41,21 @@ const QRScannerScreen = () => {
     setImgUri([])
   }
 
-  const openGallery=()=>{
-    setImgUri([])
-    setCanRead(true)
-    setCameraOn(false)
-    const options = {
-      noData: true,
-  };
+  // const openGallery=()=>{
+  //   setImgUri([])
+  //   setCanRead(true)
+  //   setCameraOn(false)
+  //   const options = {
+  //     noData: true,
+  // };
 
-  // Open Gallery and add image to image-stack
-  launchImageLibrary(options, response => {
-      if (!response.didCancel) {
-          setImgUri(uri => [...uri, response.assets[0].uri]);
-      }
-  });
-  }
+  // // Open Gallery and add image to image-stack
+  // launchImageLibrary(options, response => {
+  //     if (!response.didCancel) {
+  //         setImgUri(uri => [...uri, response.assets[0].uri]);
+  //     }
+  // });
+  // }
 
   // Scan selected image.
   const scanQrCode=()=>{
@@ -121,7 +126,11 @@ const QRScannerScreen = () => {
       icon={cameraIcon}/>
       <CustomBtn onPress={scanQrCode}
       icon={canRead?scanIcon:notFoundIcon}/>
-      <CustomBtn onPress={openGallery}
+      <CustomBtn onPress={
+        ()=>openGallery(
+        ((e)=>{setImgUri(e)}).bind(),
+        ((e)=>{setCanRead(e)}).bind(),
+        ((e)=>{setCameraOn(e)}).bind())}
       icon={galleryIcon}/>
       </View>
     </View>

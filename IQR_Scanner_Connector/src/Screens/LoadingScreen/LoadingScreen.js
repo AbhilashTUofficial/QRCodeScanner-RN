@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import getFromLocal from '../../Utils/getFromLocal'
+import {getFromLocal} from '../../Utils/localUser'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { changeUserStatus, getUser } from '../../Redux/User/userCredSlice'

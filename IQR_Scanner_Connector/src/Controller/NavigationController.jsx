@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { store } from '../Redux/store';
 import { Pressable, Text } from 'react-native';
 import { changeUserStatus } from '../Redux/User/userCredSlice';
+import { clearLocal } from '../Utils/localUser';
+import { userAuthSet } from '../Utils/userAuth';
 
 const NavigationController = () => {
     const Stack = createNativeStackNavigator();
@@ -38,8 +40,11 @@ const NavigationController = () => {
           headerRight: () => (
             <Pressable
               onPress={() => {
-                changeUserStatus("notloggedin")
-                navigation.replace("qrscannerscreen")
+                changeUserStatus("notloggedin");
+                // TODO: Find a way to remove this userAuthSet function.
+                userAuthSet("notloggedin")
+                clearLocal();
+                navigation.replace("qrscannerscreen");
               }}>
                 <Text
                 style={{

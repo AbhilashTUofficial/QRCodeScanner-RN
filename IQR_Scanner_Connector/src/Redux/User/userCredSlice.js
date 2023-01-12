@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import putToLocal from '../../Utils/putToLocal';
+import {putToLocal} from '../../Utils/localUser';
 import  {userAuthSet}  from '../../Utils/userAuth';
 
 const userCredSlice = createSlice({
