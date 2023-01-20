@@ -1,7 +1,5 @@
 import { launchImageLibrary } from "react-native-image-picker";
 
-
-
  export const openGallery=(setImgUri,setCanRead,setCameraOn)=>{
     setImgUri([])
     setCanRead(true)
