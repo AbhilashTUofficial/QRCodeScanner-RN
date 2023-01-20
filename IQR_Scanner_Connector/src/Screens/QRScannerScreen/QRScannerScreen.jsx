@@ -34,10 +34,16 @@ const QRScannerScreen = () => {
     setImgUri([])
   }
 
-
   const renderScanner=()=>{
     if(cameraOn){
-    return <CameraScanner onSuccess={((e)=>{callLink(e.data)}).bind()}/>
+    return <CameraScanner onSuccess={((e)=>{
+      callLink(
+        e.data,
+        dispatch,
+        navigation,
+        ((e)=>setCanRead(e)).bind(),
+        ((e)=>setImgUri(e)).bind()
+        )}).bind()}/>
     }else{
     return <ImageScanner imgUri={imgUri} imgStyle={!canRead&&{opacity:0.5}}/>
     }

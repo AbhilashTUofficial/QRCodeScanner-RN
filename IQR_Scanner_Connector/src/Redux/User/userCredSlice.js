@@ -15,6 +15,7 @@ const userCredSlice = createSlice({
 
         // Save user data
         saveUser:(state,action)=>{
+
             putToLocal(action.payload)
             state.data=action.payload;
         },
@@ -26,6 +27,7 @@ const userCredSlice = createSlice({
         
         // Change user status
         changeUserStatus:(state, action)=>{
+            
             state.status=action.payload;
             userAuthSet(action.payload)
         }

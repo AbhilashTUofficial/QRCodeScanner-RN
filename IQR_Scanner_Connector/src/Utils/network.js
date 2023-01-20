@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { setImgUri } from '../Redux/App/appStateSlice';
 import { changeUserStatus, saveUser } from '../Redux/User/userCredSlice';
 import { isValidUrl } from './validation';
 
@@ -20,7 +19,7 @@ export const urlCall = async (url) => {
 };
 
   // Call the link from QR Code.
-export const callLink=async(url,dispatch,navigation,setCanRead)=>{
+export const callLink=async(url,dispatch,navigation,setCanRead,setImgUri)=>{
 
     if(isValidUrl(url)){
       try {
@@ -34,8 +33,7 @@ export const callLink=async(url,dispatch,navigation,setCanRead)=>{
             dispatch(saveUser(response))
             dispatch(changeUserStatus("loggedin"))
             navigation.navigate("home")
-            // setImgUri([]);
-      dispatch(setImgUri([]))
+            setImgUri([]);
 
           }}) 
       } catch (error) {      
